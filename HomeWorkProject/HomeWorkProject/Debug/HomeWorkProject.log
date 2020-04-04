@@ -1,3 +1,2 @@
 ﻿  HomeWorkProject.cpp
-C:\Users\Admin\Desktop\ControlHW\HomeWorkProject\HomeWorkProject\Huffman.h(37,20): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Users\Admin\Desktop\ControlHW\HomeWorkProject\HomeWorkProject\Huffman.h(38,21): error C3867: "std::priority_queue<Tree,std::vector<Tree,std::allocator<Tree>>,Tree>::top": нестандартный синтаксис; используйте "&", чтобы создать указатель на член
+  HomeWorkProject.vcxproj -> C:\Users\Admin\Desktop\ControlHW\HomeWorkProject\Debug\HomeWorkProject.exe
