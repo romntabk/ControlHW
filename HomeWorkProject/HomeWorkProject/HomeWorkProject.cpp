@@ -1,6 +1,6 @@
-﻿#include <iostream>
-#include "Huffman.h"
-using namespace std;
+
+#include <iostream>
+#include "FileReader.h"
 int main()
 {
 
