@@ -1,2 +1,6 @@
 ﻿  HomeWorkProject.cpp
-  HomeWorkProject.vcxproj -> C:\Users\Admin\Desktop\ControlHW\HomeWorkProject\Debug\HomeWorkProject.exe
+C:\Users\Admin\Desktop\gitcl\ControlHW\HomeWorkProject\HomeWorkProject\Huffman.h(70,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Admin\Desktop\gitcl\ControlHW\HomeWorkProject\HomeWorkProject\FileReader.h(26,20): warning C4244: =: преобразование "std::streamoff" в "int", возможна потеря данных
+C:\Users\Admin\Desktop\gitcl\ControlHW\HomeWorkProject\HomeWorkProject\FromStringToChar.h(18,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Admin\Desktop\gitcl\ControlHW\HomeWorkProject\HomeWorkProject\HomeWorkProject.cpp(16,20): warning C4018: <: несоответствие типов со знаком и без знака
+  HomeWorkProject.vcxproj -> C:\Users\Admin\Desktop\gitcl\ControlHW\HomeWorkProject\Debug\HomeWorkProject.exe
