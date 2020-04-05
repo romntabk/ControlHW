@@ -17,7 +17,7 @@ vector<char> fromStringToChars(string text, vector<pair<string,string>> vec) {
 	string str = "", str2 = "";
 	for (int i = 0; i < text.length(); i++) {
 		int g = vec.size();
-		while (string(1, text[i]) != vec[--g].first);
+		while (string(1, text[i]+128) != vec[--g].first);
 		str += vec[g].second;
 		if (str.length() >= 8) {
 			str2 = str.substr(0, 8);

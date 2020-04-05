@@ -57,7 +57,7 @@ vector<pair<string, string>> HuffCoding( char* bytes, int n) {
 	for (int i = 0; i < 256; i++) arrCount[i] = 0;
 	for (int i = 0; i < n; i++) {
 		arrCount[128+(int)bytes[i]]++;
-		cout << (int)bytes[i]+128 << " ";
+		//cout << (int)bytes[i]+128 << " ";
 	}
 	for (int i = 0; i < 256; i++) {
 		if (arrCount[i]	 != 0) {
