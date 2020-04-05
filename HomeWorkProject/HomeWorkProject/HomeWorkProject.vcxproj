@@ -151,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileReader.h" />
+    <ClInclude Include="FileWriter.h" />
     <ClInclude Include="FromStringToChar.h" />
     <ClInclude Include="Huffman.h" />
   </ItemGroup>

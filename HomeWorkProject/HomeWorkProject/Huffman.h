@@ -73,8 +73,31 @@ vector<pair<string, string>> HuffCoding( char* bytes, int n) {
 	}
 	return vecPairs;
 }
-
-unsigned char* HuffDecoding(unsigned char* bytes, int n, vector<pair<string,string>> vec) {
-	
-	return bytes;
+string toZeroOne(int x) {
+	if (x == 0)
+		return "";
+	if (x % 2 == 1)
+		return toZeroOne(x / 2) + "1";
+	return toZeroOne(x / 2) + "0";
+}
+vector<char> HuffDecoding(char* bytes, int n, vector<pair<string,string>> vec) {
+	vector<char> chars;
+	string str = "";
+	bool flag = false;
+	for (int i = 0; i < n; i++) {
+		flag = false;
+		str += toZeroOne(bytes[i] +128);
+		while (!flag) {
+			flag = true;
+			int g = vec.size();
+			while (str.find(vec[--g].second) != 0 && g != 0);
+			if (str.find(vec[g].second) == 0) {
+				flag = false;
+				str.erase(0, vec[g].second.length());
+				chars.push_back(vec[g].first[0]);
+				cout << endl << " smotri!!! " << char(vec[g].first[0]);
+			}
+		}
+	}
+	return chars;
 }
