@@ -23,5 +23,11 @@
     <ClInclude Include="Huffman.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="FileReader.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="FromStringToChar.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

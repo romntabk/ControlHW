@@ -2,8 +2,10 @@
 #include <queue>
 #include <vector>
 #include<iostream>
-#include<sstream>
 using namespace std;
+
+
+vector<pair<string, string>> vecPairs;
 struct Tree {
 
 	Tree* left;
@@ -27,10 +29,14 @@ struct Tree {
 	}
 	void traversal_code(string code) {
 		this->xChar = code;
-		if (left != 0 || right != 0) {
+		if (left == nullptr && right == nullptr) {
+			vecPairs.push_back(pair<string, string>(val, xChar));
+		}
+		if (left != nullptr || right != nullptr) {
 			left->traversal_code(code + "1");
 			right->traversal_code(code + "0");
 		}
+		
 	}
     Tree* build(priority_queue<Tree, vector<Tree>, Tree> graph) {
 		while (graph.size() > 1) {
@@ -43,24 +49,32 @@ struct Tree {
 	}
 };
 
-Tree* HuffCoding( char* bytes, int n) {
+
+
+vector<pair<string, string>> HuffCoding( char* bytes, int n) {
 	unsigned int arrCount[256];
 	priority_queue<Tree, vector<Tree>, Tree> graph;
 	for (int i = 0; i < 256; i++) arrCount[i] = 0;
 	for (int i = 0; i < n; i++) {
-		arrCount[bytes[i]]++;
+		arrCount[128+(int)bytes[i]]++;
+		//cout << (int)bytes[i]+128 << " ";
 	}
 	for (int i = 0; i < 256; i++) {
-		if (arrCount != 0) {
+		if (arrCount[i]	 != 0) {
 			Tree drevo = Tree(string(1, (char)i), arrCount[i]);
 			graph.push(drevo);
 		}
 	}
+    vecPairs = vector<pair<string, string>>();
 	Tree* tree = Tree().build(graph);
-	return tree;
+	tree->traversal_code("");
+	for (int i = 0; i < vecPairs.size(); i++) {
+		cout << vecPairs[i].first << " and " << vecPairs[i].second<< endl;
+	}
+	return vecPairs;
 }
 
-unsigned char* HuffDecoding(unsigned char* bytes, int n) {
-
+unsigned char* HuffDecoding(unsigned char* bytes, int n, vector<pair<string,string>> vec) {
+	
 	return bytes;
 }

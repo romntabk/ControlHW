@@ -8,7 +8,7 @@ using namespace std;
 class FileReader
 {
 private:
-	char *data;
+	char *data;	
 	int size;
 	ifstream file;
 	string fname;

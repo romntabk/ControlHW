@@ -150,6 +150,8 @@
     <ClCompile Include="HomeWorkProject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FileReader.h" />
+    <ClInclude Include="FromStringToChar.h" />
     <ClInclude Include="Huffman.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
