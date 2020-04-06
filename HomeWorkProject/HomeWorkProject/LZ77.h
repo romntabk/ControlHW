@@ -116,7 +116,7 @@ private:
 			if (buff_pos + buff_size + match.length >= size)
 			{
 				buff_pos = buff_pos + match.length;
-				match.next = -1;
+				match.next = '\0';
 				return match;
 			}
 			if (max.length <= match.length)
@@ -209,19 +209,23 @@ private:
 	vector<char> Decode()
 	{
 		vector<char> decode = vector<char>();
-
+		int q = 0;
 		for (int i = 0; i < encode.size(); i++)
 		{
 			if (encode[i].length > 0)
 			{
+				// (4, 10, c)
 				int start = decode.size() - encode[i].offset;
 				for (int c = 0; c < encode[i].length; c++)
 				{
 					decode.push_back(decode[start + c]);
 				}
 			}
+			//if (encode[i].next != '\0')
 			decode.push_back(encode[i].next);
 		}
+		if (decode[decode.size() - 1] == '\0')
+			decode.pop_back();
 		return decode;
 	}
 
