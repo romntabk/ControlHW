@@ -23,7 +23,7 @@
     <ProjectGuid>{352B2B39-734B-45C3-9C67-E5BF69A8A813}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>HomeWorkProject</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -150,10 +150,7 @@
     <ClCompile Include="HomeWorkProject.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FileReader.h" />
-    <ClInclude Include="FileWriter.h" />
-    <ClInclude Include="FromStringToChar.h" />
-    <ClInclude Include="Huffman.h" />
+
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
