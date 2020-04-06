@@ -9,23 +9,7 @@
 
 int main()
 {
-	FileReader f = FileReader("q.txt");
-
-	LZ77 q(f.getData(), f.getSize());
-	q.Encode();
-	
-	char *w = q.EncodeBytes();
-	int wsize = q.GetSizeBytes();
-	
-	q.SetCode(q.DecodeBytes(w, wsize));
-	vector<char> a = q.Decode();
-
-	FileWriter writer("q_encode.txt", w, wsize);
-	
-	std::cout << "DECODED";
-	std::cout << std::endl << std::endl;
-	for (int i = 0; i < a.size(); i++)
-		std::cout << a[i];
+	LZ77 lz("q.pdf");
 
 	return 14 / 88;
 }

@@ -3,7 +3,8 @@
 #include<iostream>
 #include<string>
 #include<algorithm>
-
+#include "FileReader.h"
+#include "FileWriter.h"
 
 using namespace std;
 
@@ -31,7 +32,7 @@ public:
 
 	Node(char a[sizeof(9)])
 	{
-		
+
 	}
 };
 union converter
@@ -56,29 +57,18 @@ private:
 	int bytes_size;
 
 	int pos = 0;
-public:
-	LZ77()
-	{
-
-	}
-	LZ77(char *data, int size)
-	{
-		this->data = data;
-		this->size = size;
-	}
 
 	void Encode()
 	{
 		while (buff_pos + buff_size < size)
 		{
- 			Node match = FindMatche(pos, buff_pos);
+			Node match = FindMatche(pos, buff_pos);
 
 
-			cout << match.ToString() << endl;
+			//cout << match.ToString() << endl;
 			encode.push_back(match);
-		}		
+		}
 	}
-
 
 	Node FindMatche(int pos, int &buff_pos)
 	{
@@ -107,12 +97,12 @@ public:
 		for (int c = 0; c < matches.size(); c++)
 		{
 			Node match;
-			
+
 			int i = matches[c];
 			int step = 0;
 			//     IN BUFF						 IN DATA
 			//while (data[i - step % buff_size] == data[i + buff_size - (matches[c] - buff_pos)])
-			while (data[i - step *  buff_size] == data[i + buff_size - (matches[c] - buff_pos)])
+			while (data[i - step * buff_size] == data[i + buff_size - (matches[c] - buff_pos)])
 			{
 				match.length += 1;
 				i++;
@@ -153,19 +143,17 @@ public:
 			return Node(0, 0, data[buff_pos + buff_size - 1]);
 		return max;
 	}
-	
+
 	vector<Node>  GetEncode()
 	{
 		return encode;
 	}
 
-
-
 	char* EncodeBytes()
 	{
 		bytes_size = sizeof(Node) * encode.size();
 		char *p = new char[bytes_size];
-		
+
 		converter con;
 
 		int c = 0;
@@ -191,7 +179,7 @@ public:
 		vector<Node> code = vector<Node>();
 		converter con;
 		int qi = 0;
-		for (int i = 0; i < size / 9; i++)
+		for (int i = 0; i < size / sizeof(Node); i++)
 		{
 			Node tmp = Node();
 			char b[sizeof(int)];
@@ -232,13 +220,7 @@ public:
 					decode.push_back(decode[start + c]);
 				}
 			}
-
 			decode.push_back(encode[i].next);
-			// out
-			for (int q = 0; q < decode.size(); q++)
-				cout << decode[q];
-			cout << "   : " << i;
-			cout << endl;
 		}
 		return decode;
 	}
@@ -251,5 +233,57 @@ public:
 	int GetSizeBytes()
 	{
 		return bytes_size;
+	}
+public:
+	LZ77()
+	{
+
+	}
+	LZ77(char *data, int size)
+	{
+		this->data = data;
+		this->size = size;
+	}
+
+	LZ77(string start)
+	{
+		EncodeFile(start);
+		DecodeFile(start + "_encoded");
+	}
+	void EncodeFile(string name)
+	{
+		// open
+		FileReader reader = FileReader(name);
+		// read
+		data = reader.getData();
+		size = reader.getSize();
+		// encode
+		Encode();
+		// node->char*
+		char *encoded_data = EncodeBytes();
+		// bytes_size - size here
+
+		// write 
+		FileWriter writer = FileWriter(name + "_encoded", encoded_data, bytes_size);
+		writer.Write();
+	}
+
+	void DecodeFile(string name)
+	{
+		// open
+		FileReader reader = FileReader(name);
+		// read
+		data = reader.getData();
+		size = reader.getSize();
+		// decode
+		encode = DecodeBytes(data, size);
+		// vector<char> to char*
+		vector<char> decoded_dataVec = Decode();
+		char *decoded = new char[sizeof(char) * decoded_dataVec.size()];
+		for (int i = 0; i < decoded_dataVec.size(); i++)
+			decoded[i] = decoded_dataVec[i];
+		// write
+		FileWriter writer = FileWriter(name + "_decoded", decoded, decoded_dataVec.size());
+		writer.Write();
 	}
 };
