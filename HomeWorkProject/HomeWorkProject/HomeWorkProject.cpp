@@ -14,8 +14,12 @@ int main()
 	LZ77 q(f.getData(), f.getSize());
 	q.Encode();
 	vector<Node> s = q.GetEncode();
-	for (int i = 0; i < s.size(); i++)
-		cout << s[i].ToString() << " ";
+
+	vector<char> dec = q.Decode();
+	cout << endl;
+	for (int i = 0; i < dec.size(); i++)
+		cout << dec[i];
+
 
 	return 14 / 88;
 }

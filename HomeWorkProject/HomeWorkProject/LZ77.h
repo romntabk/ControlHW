@@ -2,12 +2,14 @@
 #include<vector>
 #include<iostream>
 #include<string>
+#include<algorithm>
 
 
 using namespace std;
 
 class Node
 {
+
 public:
 	int offset = 0;
 	int length = 0;
@@ -26,6 +28,8 @@ public:
 	{
 		return "(" + to_string(offset) + ", " + to_string(length) + ", " + next + ")";
 	}
+
+
 };
 
 class LZ77
@@ -55,27 +59,23 @@ public:
 	{
 		while (buff_pos + buff_size < size)
 		{
-			Node match = FindMatche(pos, buff_pos);
-			if (buff_size >= MAX_BUFF_SIZE)
-			{
-				buff_pos += match.length;
-				if (match.length == 0)
-					buff_pos++;
-			}
-			pos += match.length;
+ 			Node match = FindMatche(pos, buff_pos);
+
+			//pos += match.length;
+
 			cout << match.ToString() << endl;
 			encode.push_back(match);
 		}		
 	}
 
 
-	Node FindMatche(int pos, int buff_pos)
+	Node FindMatche(int pos, int &buff_pos)
 	{
 		// 1 find all matches
 		vector<int> matches = vector<int>();
 
-		//if (buff_pos != 0)
-		//	buff_pos -= 1;
+		/*if (buff_pos != 0)
+			buff_pos -= 1;*/
 
 		int first_char = buff_size + buff_pos;
 
@@ -111,16 +111,32 @@ public:
 
 			match.next = data[buff_pos + buff_size + match.length];
 
+			if (buff_pos + buff_size + match.length == size)
+			{
+				buff_pos += 10;
+				match.next = -1;
+				return match;
+			}
 			if (max.length < match.length)
 				max = match;
+		}
+
+		if (buff_size >= MAX_BUFF_SIZE)
+		{
+			buff_pos += max.length + 1;
 		}
 
 		if (buff_size < MAX_BUFF_SIZE)
 		{
 			buff_size += max.length + 1;
 			if (buff_size > MAX_BUFF_SIZE)
+			{
+				//buff_pos += (max.length);
 				buff_size = MAX_BUFF_SIZE;
+				buff_pos -= 1;
+			}
 		}
+
 		if (max.length == 0)
 			return Node(0, 0, data[pos + buff_size - 1]);
 		return max;
@@ -136,5 +152,27 @@ public:
 		return encode.size();
 	}
 
+	vector<char> Decode()
+	{
+		vector<char> decode = vector<char>();
 
+		for (int i = 0; i < encode.size(); i++)
+		{
+			if (encode[i].length > 0)
+			{
+				int start = decode.size() - encode[i].offset;
+				for (int c = 0; c < encode[i].length; c++)
+				{
+					decode.push_back(decode[start + c]);
+				}
+			}
+			decode.push_back(encode[i].next);
+			// out
+			for (int q = 0; q < decode.size(); q++)
+				cout << decode[q];
+			cout << "   : " << i;
+			cout << endl;
+		}
+		return decode;
+	}
 };
