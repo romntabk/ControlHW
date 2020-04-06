@@ -1,7 +1,6 @@
-﻿// HomeWorkProject.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
 
 #include <iostream>
+#include "Huffman.h"
 #include "FileReader.h"
 #include "FileWriter.h"
 #include"LZ77.h"
@@ -9,7 +8,5 @@
 
 int main()
 {
-	LZ77 lz("q.pdf");
-
-	return 14 / 88;
+	
 }
