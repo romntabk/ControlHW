@@ -12,9 +12,9 @@ class Node
 {
 
 public:
-	int offset = 0;
-	int length = 0;
-	char next = 0;
+	unsigned int offset;
+	unsigned int length;
+	char next;
 
 	Node(int a, int b, char c)
 	{
@@ -23,7 +23,8 @@ public:
 		next = c;
 	}
 
-	Node() {}
+	Node() { offset = length = 0;
+	next = 0; }
 
 	string ToString()
 	{
@@ -37,7 +38,7 @@ public:
 };
 union converter
 {
-	int s;
+	unsigned int s;
 	char byte[sizeof(int)];
 	converter() {}
 	converter(char b[sizeof(int)]) { for (int j = 0; j < sizeof(int); j++) byte[j] = b[j]; }
@@ -65,7 +66,7 @@ private:
 			Node match = FindMatche(pos, buff_pos);
 
 
-			//cout << match.ToString() << endl;
+			cout << match.ToString() << endl;
 			encode.push_back(match);
 		}
 	}
@@ -106,7 +107,7 @@ private:
 			{
 				match.length += 1;
 				i++;
-				if (i - step * buff_size >= buff_size)
+				if (i - step * buff_size - buff_pos >= buff_size)
 					step += 1;
 			}
 			match.offset = buff_size - (matches[c] - buff_pos);
@@ -133,8 +134,9 @@ private:
 			buff_size += max.length + 1;
 			if (buff_size > MAX_BUFF_SIZE)
 			{
-				buff_pos += (max.length);
 				buff_size = MAX_BUFF_SIZE;
+				//buff_pos += buff_size;
+				buff_pos += (max.length + 1) - (MAX_BUFF_SIZE - (max.length + 1)) - 1;
 				//buff_pos -= 1;
 			}
 		}
@@ -151,7 +153,7 @@ private:
 
 	char* EncodeBytes()
 	{
-		bytes_size = sizeof(Node) * encode.size();
+		bytes_size = (sizeof(int) * 2 + sizeof(char))* encode.size();
 		char *p = new char[bytes_size];
 
 		converter con;
@@ -179,7 +181,7 @@ private:
 		vector<Node> code = vector<Node>();
 		converter con;
 		int qi = 0;
-		for (int i = 0; i < size / sizeof(Node); i++)
+		for (int i = 0; i < bytes_size / (sizeof(int) * 2 + sizeof(char)); i++)
 		{
 			Node tmp = Node();
 			char b[sizeof(int)];
@@ -195,10 +197,13 @@ private:
 			tmp.length = con.s;
 
 			tmp.next = q[qi++];
-
+			
 			code.push_back(tmp);
 		}
+
 		return code;
+
+
 	}
 
 	int GetEncodeSize()
@@ -214,14 +219,12 @@ private:
 		{
 			if (encode[i].length > 0)
 			{
-				// (4, 10, c)
 				int start = decode.size() - encode[i].offset;
 				for (int c = 0; c < encode[i].length; c++)
 				{
 					decode.push_back(decode[start + c]);
 				}
 			}
-			//if (encode[i].next != '\0')
 			decode.push_back(encode[i].next);
 		}
 		if (decode[decode.size() - 1] == '\0')
@@ -237,7 +240,7 @@ private:
 	int GetSizeBytes()
 	{
 		return bytes_size;
-	}
+	}	  
 public:
 	LZ77()
 	{
@@ -270,6 +273,8 @@ public:
 		// write 
 		FileWriter writer = FileWriter(name + "_encoded", encoded_data, bytes_size);
 		writer.Write();
+
+		delete[] encoded_data;
 	}
 
 	void DecodeFile(string name)
@@ -289,5 +294,9 @@ public:
 		// write
 		FileWriter writer = FileWriter(name + "_decoded", decoded, decoded_dataVec.size());
 		writer.Write();
+
+		delete[] decoded;
+		delete[] data;
+
 	}
 };

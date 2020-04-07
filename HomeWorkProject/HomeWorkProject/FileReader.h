@@ -28,6 +28,8 @@ public:
 
 		data = new char[size];
 		file.read(data, size);
+
+		file.close();
 	}
 
 	char* getData()

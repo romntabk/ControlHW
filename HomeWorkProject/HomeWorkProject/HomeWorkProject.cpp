@@ -8,5 +8,6 @@
 
 int main()
 {
-	
+	LZ77 lz("a.jpg");
+	return 0;
 }
